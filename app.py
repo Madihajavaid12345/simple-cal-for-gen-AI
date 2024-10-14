@@ -1,39 +1,38 @@
 import streamlit as st
+import numpy as np
+import matplotlib.pyplot as plt
+from math import sin, cos, tan, sqrt, log, exp
 
-# Function definitions for basic calculator operations
-def add(x, y):
-    return x + y
+# Title of the app
+st.title('Basic Calculator')
 
-def subtract(x, y):
-    return x - y
+def calculator():
+    st.subheader("Basic Operations")
+    num1 = st.number_input("Enter first number", step=1e-6, format="%.6f")
+    num2 = st.number_input("Enter second number", step=1e-6, format="%.6f")
+    operation = st.selectbox("Choose an operation", ("Add", "Subtract", "Multiply", "Divide"))
 
-def multiply(x, y):
-    return x * y
+    if st.button("Calculate"):
+        if operation == "Add":
+            result = num1 + num2
+            st.write(f"Result: {num1} + {num2} = {result}")
+        elif operation == "Subtract":
+            result = num1 - num2
+            st.write(f"Result: {num1} - {num2} = {result}")
+        elif operation == "Multiply":
+            result = num1 * num2
+            st.write(f"Result: {num1} * {num2} = {result}")
+        elif operation == "Divide":
+            if num2 != 0:
+                result = num1 / num2
+                st.write(f"Result: {num1} / {num2} = {result}")
+            else:
+                st.error("Error! Division by zero.")
 
-def divide(x, y):
-    if y == 0:
-        return "Error! Division by zero."
-    else:
-        return x / y
+# Sidebar feature selection
+st.sidebar.title("Choose a Feature")
+feature = st.sidebar.radio("Select a feature", ("Basic Calculator",))
 
-# Streamlit app interface
-st.title("Simple Calculator")
-
-# User input for numbers and operation
-num1 = st.number_input("Enter the first number", value=0.0, format="%.2f")
-num2 = st.number_input("Enter the second number", value=0.0, format="%.2f")
-
-operation = st.selectbox("Choose an operation", ["Add", "Subtract", "Multiply", "Divide"])
-
-# Perform the operation
-if operation == "Add":
-    result = add(num1, num2)
-elif operation == "Subtract":
-    result = subtract(num1, num2)
-elif operation == "Multiply":
-    result = multiply(num1, num2)
-elif operation == "Divide":
-    result = divide(num1, num2)
-
-# Display the result
-st.write(f"The result is: {result}")
+# Display the corresponding feature
+if feature == "Basic Calculator":
+    calculator()
